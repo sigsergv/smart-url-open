@@ -1,0 +1,12 @@
+Source: smart-url-open
+Section: web
+Priority: optional
+Maintainer: Sergey Stolyarov <sergei@regolit.com>
+Build-Depends: dpkg-dev, debhelper (>= 9), dh-exec
+Standards-Version: 3.9.1
+
+Package: smart-url-open
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3
+Description: Smart URL opener
+ Open URLs in specified apps using rules defined per system user.

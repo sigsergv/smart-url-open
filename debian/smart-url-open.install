@@ -1,0 +1,3 @@
+#!/usr/bin/dh-exec
+
+src/smart-url-open => usr/bin/smart-url-open

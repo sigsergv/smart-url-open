@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+# See README for details: https://github.com/sigsergv/smart-url-open/blob/master/README.md
+
+from sys import argv
+import os
+import subprocess
+import platform
+import json
+import codecs
+import re
+
+args = argv[1:]
+
+# detect OS
+SYSTEM = platform.system()
+if SYSTEM == 'Darwin':
+    OPEN_BINARY = 'open'
+elif SYSTEM == 'Windows':
+    OPEN_BINARY = 'start'
+else:
+    OPEN_BINARY = 'xdg-open'
+
+configpath = os.environ.get('APPDATA') or os.environ.get('XDG_CONFIG_HOME') or os.path.join(os.environ['HOME'], '.config')
+configfile = os.path.join(configpath, 'smart-url-open.json')
+
+try:
+    with codecs.open(configfile, encoding='utf8') as fp:
+        data = json.load(fp)
+        rules = data.get('rules', [])
+        # find rule that matches our url
+        for r in rules:
+            mo = re.search(r.get('re', ''), args[0])
+            if mo is None:
+                continue
+
+            program = r.get('program')
+            if type(program) is str:
+                subprocess.call([program] + args)
+            else:
+                subprocess.call(program + args)
+            break
+
+except json.decoder.JSONDecodeError:
+    # fallback, use standard application
+    print('fallback case 1')
+    subprocess.call([OPEN_BINARY] + args)
+except FileNotFoundError:
+    # fallback, use standard application
+    print('fallback case 2')
+    subprocess.call([OPEN_BINARY] + args)
