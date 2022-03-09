@@ -1,0 +1,6 @@
+[Desktop Entry]
+Version=1.0
+Name=smart-url-open
+Exec=/usr/bin/smart-url-open %u
+Terminal=false
+Categories=WebBrowser;Network;

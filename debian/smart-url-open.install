@@ -1,3 +1,4 @@
 #!/usr/bin/dh-exec
 
 src/smart-url-open => usr/bin/smart-url-open
+debian/smart-url-open.desktop => usr/share/applications/smart-url-open.desktop
